@@ -20,7 +20,7 @@ char *find_command_in_path(char *command);
 void print_env(void);
 void handle_exit(char *line);
 int handle_builtins(char *line, char **argv);
-int _fork(char *line);
+int _fork(char **argv);
 char *trim_spaces(char *line);
 char *get_full_path(char *dir, char *command);
 

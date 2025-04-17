@@ -5,7 +5,7 @@
  *
  * Description:
  * This function provides an infinite loop that acts as a command-line
- * interface for the user. The function reads commands from standard inout,
+ * interface for the user. The function reads commands from standard input,
  * removes whitespace if needed, and passes the input to '_fork' for execution.
  * Finally, the program exits when EOF (Ctrl+D) is encountered
  *
@@ -29,8 +29,8 @@ int main(void)
 		nread = getline(&line, &len, stdin);
 		if (nread == -1) /* EOF (Crtl+D) */
 		{
-			write(STDOUT_FILENO "\n", 1);
-			break
+			write(STDOUT_FILENO, "\n", 1);
+			break;
 		}
 		/* Remove unnecessary spaces */
 		line = trim_spaces(line);
@@ -51,5 +51,4 @@ int main(void)
 
 	free(line);
 	return (0);
-
-
+}
