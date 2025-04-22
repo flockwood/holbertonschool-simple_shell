@@ -39,11 +39,11 @@ int _fork(char **argv)
 	{
 		/* In child */
 
-		/* DEBUG */
+		/* DEBUG 
 		// write(STDOUT_FILENO, "[DEBUG] full_path: ", 19);
 		// write(STDOUT_FILENO, full_path, strlen(full_path));
 		// write(STDOUT_FILENO, "\n", 1);
-		/* END DEBUG */
+		 END DEBUG */
 
 		if (execve(full_path, argv, environ) == -1)
 		{
