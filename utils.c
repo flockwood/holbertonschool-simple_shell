@@ -10,7 +10,7 @@ char *trim_spaces(char *line)
 	char *end;
 
 	/* Skip leading spaces */
-	while (isspace(*line))
+	while (*line == ' ' || *line == '\t' || *line == '\n')
 		line++;
 
 	if (*line == '\0')
@@ -20,7 +20,7 @@ char *trim_spaces(char *line)
 	end = line + strlen(line) - 1;
 
 	/* Skip trailing spaces */
-	while (end > line && isspace(*end))
+	while (end > line && (*end == ' ' || *end == '\t' || *end == '\n'))
 		end--;
 
 	/* Null-terminate the string after the last non-space */
