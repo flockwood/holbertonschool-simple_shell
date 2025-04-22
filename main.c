@@ -30,9 +30,12 @@ int main(void)
 		nread = getline(&line, &len, stdin);
 		if (nread == -1) /* EOF (Crtl+D) */
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
+
+		
 		/* Remove unnecessary spaces */
 		line = trim_spaces(line);
 		if (line[0] == '\0')
