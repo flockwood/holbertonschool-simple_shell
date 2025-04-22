@@ -23,6 +23,7 @@ int main(void)
 	while (1)
 	{
 		 /* Display prompt */
+		if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$ ", 2);
 
 		/* Reads user input */
