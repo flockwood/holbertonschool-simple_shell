@@ -28,8 +28,20 @@ char *find_command_in_path(char *command)
 {
 	char *path_env, *path_copy, *token, *full_path;
 	struct stat st;
+	int i = 0;
 
-	path_env = getenv("PATH");
+	/* Manually find PATH in environ */
+	while (environ[i])
+	{
+		if (strncmp(environ[i], "PATH=", 5) == 0)
+		{
+			path_env = environ[i] + 5;
+			break;
+		}
+		i++;
+	}
+
+
 	if (!path_env)
 		return (NULL);
 
