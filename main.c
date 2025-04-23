@@ -44,11 +44,9 @@ int status = 0;
 
 while (1)
 {
-/* Show prompt only if in interactive mode */
 if (isatty(STDIN_FILENO))
 write(STDOUT_FILENO, "[$]> ", 5);
 
-/* Read & Clean newlines, white spaces*/
 trimmed_line = readNclean(&line, &len);
 if (!trimmed_line)
 break;
@@ -56,7 +54,8 @@ break;
 if (*trimmed_line == '\0')
 continue;
 
-/* Tokenize input */
+memset(argv, 0, sizeof(argv));
+
 if (tokenize_input(trimmed_line, argv) == 0)
 continue;
 
