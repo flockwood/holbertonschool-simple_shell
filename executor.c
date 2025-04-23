@@ -31,14 +31,18 @@ return (full_path);
 char *obtener_ruta_cmd(char **argv)
 {
 char *full_path = NULL;
-
+if (!argv || !argv[0])
+return (NULL);
 if (strchr(argv[0], '/'))
 {
 if (access(argv[0], X_OK) == 0)
 return (argv[0]);
 else
 {
+if (argv[0][0] != '\0')
 fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+else
+fprintf(stderr, "./hsh: 1: unknown command\n");
 return (NULL);
 }
 }
@@ -47,7 +51,10 @@ else
 full_path = buscarCmd(argv[0]);
 if (!full_path)
 {
+if (argv[0][0] != '\0')
 fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+else
+fprintf(stderr, "./hsh: 1: unknown command\n");
 return (NULL);
 }
 return (full_path);
@@ -84,7 +91,10 @@ else if (pid == 0)
 {
 if (!full_path)
 {
+if (argv[0] && argv[0][0] != '\0')
 fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+else
+fprintf(stderr, "./hsh: 1: unknown command\n");
 exit(127);
 }
 if (execve(full_path, argv, environ ? environ : NULL) == -1)
