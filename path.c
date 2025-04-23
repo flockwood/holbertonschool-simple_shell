@@ -31,6 +31,8 @@ char *path_env, *path_copy, *token, *full_path;
 struct stat st;
 int i = 0;
 
+if (!environ)
+return (NULL);
 /* Manually find PATH in environ */
 while (environ[i])
 {
