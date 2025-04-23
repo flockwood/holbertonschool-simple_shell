@@ -53,7 +53,7 @@ return (-1);
 }
 else if (pid == 0)
 {
-if (execve(full_path, arg, environ) == -1)
+if (execve(full_path, argv, environ) == -1)
 {
 perror("execve");
 exit(1);

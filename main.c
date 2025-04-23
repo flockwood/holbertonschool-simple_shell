@@ -39,7 +39,6 @@ int main(void)
 char *line = NULL;
 char *trimmed_line = NULL;
 size_t len = 0;
-ssize_t nread;
 char *argv[64];
 int status = 0;
 
@@ -47,7 +46,7 @@ while (1)
 {
 /* Show prompt only if in interactive mode */
 if (isatty(STDIN_FILENO))
-write(STDOUT_FILENO, "[$] ", 2);
+write(STDOUT_FILENO, "[$]> ", 5);
 
 /* Read & Clean newlines, white spaces*/
 trimmed_line = readNclean(&line, &len);
