@@ -1,5 +1,4 @@
 #include "main.h"
-extern char **environ;
 
 /**
  * buscarCmd - Busca si el comando existe directamente o en el PATH
@@ -67,6 +66,8 @@ pid_t pid;
 int status;
 char *full_path;
 
+if (!argv || !argv[0] || argv[0][0] == '\0')
+return (127);
 full_path = obtener_ruta_cmd(argv);
 if (!full_path)
 return (127);
