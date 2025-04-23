@@ -1,4 +1,5 @@
 #include "main.h"
+extern char **environ;
 
 /**
  * buscarCmd - Busca si el comando existe directamente o en el PATH
