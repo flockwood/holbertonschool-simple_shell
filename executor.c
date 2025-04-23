@@ -82,6 +82,11 @@ return (-1);
 }
 else if (pid == 0)
 {
+if (!full_path)
+{
+fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+exit(127);
+}
 if (execve(full_path, argv, environ ? environ : NULL) == -1)
 {
 perror("execve");
