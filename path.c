@@ -37,6 +37,8 @@ while (environ[i])
 if (strncmp(environ[i], "PATH=", 5) == 0)
 {
 path_env = environ[i] + 5;
+if (path_env[0] == '\0')
+return (NULL);
 break;
 }
 i++;
