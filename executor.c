@@ -17,9 +17,6 @@ full_path = find_command_in_path(cmd);
 
 if (!full_path)
 {
-write(STDERR_FILENO, "./hsh: 1: ", 10);
-write(STDERR_FILENO, cmd, strlen(cmd));
-write(STDERR_FILENO, ": not found\n", 12);
 return (NULL);
 }
 
