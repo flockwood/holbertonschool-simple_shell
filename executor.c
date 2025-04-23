@@ -25,21 +25,51 @@ return (NULL);
 
 return (full_path);
 }
+/**
+ * obtener_ruta_cmd - decide la ruta del comando a ejecutar
+ * @argv: argumentos del comando
+ * Return: ruta del ejecutable o NULL si no se encuentra
+ */
+
+char *obtener_ruta_cmd(char **argv)
+{
+char *full_path = NULL;
+
+if (strchr(argv[0], '/'))
+{
+if (access(argv[0], X_OK) == 0)
+return (argv[0]);
+else
+{
+fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+return (NULL);
+}
+}
+else
+{
+full_path = buscarCmd(argv[0]);
+if (!full_path)
+{
+fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+return (NULL);
+}
+return (full_path);
+}
+return (NULL);
+}
 
 /**
  * _fork - Ejecuta un comando usando fork y execve
  * @argv: comando y sus argumentos
  * Return: codigo de salida
  */
-
 int _fork(char **argv)
 {
 pid_t pid;
 int status;
 char *full_path;
 
-full_path = buscarCmd(argv[0]);
-
+full_path = obtener_ruta_cmd(argv);
 if (!full_path)
 return (127);
 
