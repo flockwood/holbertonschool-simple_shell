@@ -1,0 +1,44 @@
+.TH hsh 1 "April 2025" "0.1" "Holberton Shell Manual"
+.SH NAME
+hsh \- simple shell, a basic command-line interpreter
+.SH SYNOPSIS
+.B hsh
+.RI [command]
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command interpreter built as part of the Holberton School curriculum.
+
+It mimics basic functionality of
+.BR /bin/sh ,
+such as running commands from the PATH, handling built-ins, and reading from standard input.
+
+.SH FEATURES
+.TP
+Supports execution of system commands using PATH.
+.TP
+Built-in commands:
+.B exit
+and
+.B env .
+.TP
+Supports both interactive and non-interactive modes.
+.TP
+Displays error messages similar to
+.BR /bin/sh .
+
+.SH USAGE
+To compile:
+.B
+gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+
+To run:
+.B
+./hsh
+
+.SH AUTHORS
+Fernando Lockwood  
+Andrés Mora
+
+.SH SEE ALSO
+sh(1), bash(1), execve(2)
+
