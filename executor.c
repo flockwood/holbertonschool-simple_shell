@@ -10,6 +10,9 @@ char *buscarCmd(char *cmd)
 {
 char *full_path;
 
+if (!cmd)
+return (NULL);
+
 if (access(cmd, X_OK) == 0)
 return (cmd);
 

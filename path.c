@@ -27,11 +27,11 @@ return (full_path);
  */
 char *find_command_in_path(char *command)
 {
-char *path_env, *path_copy, *token, *full_path;
+char *path_env = NULL, *path_copy, *token, *full_path;
 struct stat st;
 int i = 0;
 
-if (!environ)
+if (!command || !environ)
 return (NULL);
 /* Manually find PATH in environ */
 while (environ[i])
@@ -45,7 +45,6 @@ break;
 }
 i++;
 }
-
 
 if (!path_env)
 return (NULL);
