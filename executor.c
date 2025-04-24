@@ -51,7 +51,18 @@ return (NULL);
 }
 else
 {
-if (!getenv("PATH"))
+int i = 0, path_exists = 0;
+
+while (environ[i])
+{
+if (strncmp(environ[i], "PATH=", 5) == 0)
+{
+path_exists = 1;
+break;
+}
+i++;
+}
+if (!path_exists)
 {
 if (argv[0][0] != '\0')
 fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
@@ -59,6 +70,7 @@ else
 fprintf(stderr, "./hsh: 1: unknown command\n");
 return (NULL);
 }
+
 full_path = buscarCmd(argv[0]);
 if (!full_path)
 {
