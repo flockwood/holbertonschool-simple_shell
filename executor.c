@@ -51,6 +51,14 @@ return (NULL);
 }
 else
 {
+if (!getenv("PATH"))
+{
+if (argv[0][0] != '\0')
+fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+else
+fprintf(stderr, "./hsh: 1: unknown command\n");
+return (NULL);
+}
 full_path = buscarCmd(argv[0]);
 if (!full_path)
 {
