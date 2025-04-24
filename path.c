@@ -34,19 +34,17 @@ int i = 0;
 if (!command || !environ)
 return (NULL);
 /* Manually find PATH in environ */
-while (environ[i])
+while (environ && environ[i])
 {
 if (strncmp(environ[i], "PATH=", 5) == 0)
 {
 path_env = environ[i] + 5;
-if (path_env[0] == '\0')
-return (NULL);
 break;
 }
 i++;
 }
 
-if (!path_env)
+if (!path_env || path_env[0] == '\0')
 return (NULL);
 
 path_copy = strdup(path_env);
