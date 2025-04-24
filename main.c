@@ -60,7 +60,7 @@ if (tokenize_input(trimmed_line, argv) == 0)
 continue;
 
 /* Handle built-in commands like exit/env */
-if (handle_builtins(trimmed_line, argv))
+if (handle_builtins(trimmed_line, argv, status))
 continue;
 
 /* Execute command and store its exit status */
