@@ -72,6 +72,7 @@ int _fork(char **argv)
 pid_t pid;
 int status;
 char *full_path;
+char *empty_env[] = { NULL };
 
 if (!argv || !argv[0] || argv[0][0] == '\0')
 return (127);
@@ -97,8 +98,6 @@ else
 fprintf(stderr, "./hsh: 1: unknown command\n");
 exit(127);
 }
-char *empty_env[] = { NULL };
-
 if (execve(full_path, argv, environ ? environ : empty_env) == -1)
 {
 perror("execve");
