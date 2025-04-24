@@ -97,7 +97,9 @@ else
 fprintf(stderr, "./hsh: 1: unknown command\n");
 exit(127);
 }
-if (execve(full_path, argv, environ ? environ : NULL) == -1)
+char *empty_env[] = { NULL };
+
+if (execve(full_path, argv, environ ? environ : empty_env) == -1)
 {
 perror("execve");
 exit(1);
