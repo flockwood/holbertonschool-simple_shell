@@ -1,53 +1,164 @@
-# C - Simple Shell
+# 🐚 C - Simple Shell (`hsh`)
 
-## Description
+A lightweight UNIX command interpreter replicating core shell functionalities.
 
-Simple Shell es un intérprete de comandos UNIX desarrollado en C que emula funcionalidades básicas de `sh`.  
-Permite ejecutar comandos desde la línea de comandos, tanto en modo interactivo como no interactivo.
+---
 
-## File Structure
+## 📜 Table of Contents
+- [Introduction](#introduction)
+- [Key Concepts](#key-concepts)
+- [Built-in Commands](#built-in-commands)
+- [External Commands](#external-commands)
+- [System Calls & Functions](#system-calls--functions)
+- [Allowed Functions](#allowed-functions)
+- [Usage](#usage)
+- [Error Handling](#error-handling)
+- [Authors](#authors)
 
-| Archivo            | Descripción                                           |
-|--------------------|-------------------------------------------------------|
-| `main.c`           | Contiene la función principal que inicia el shell.    |
-| `executor.c`       | Maneja la ejecución de comandos externos.             |
-| `builtins.c`       | Implementa comandos internos como `exit` y `env`.     |
-| `utils.c`          | Funciones de utilidad para tokenizar y limpiar entrada. |
-| `path.c`           | Busca comandos en los directorios especificados en `PATH`. |
-| `main.h`           | Archivo de encabezado con definiciones y prototipos.  |
+---
 
-## Installation
+## 🚀 Introduction
 
-1. Clona este repositorio:
-   git clone https://github.com/flockwood/holbertonschool-simple_shell.git
+### What is a Shell?
+A shell is a program that reads commands from a user and interprets them to execute programs, scripts, or built-in functionalities. It acts as a bridge between the user and the operating system.
 
-2. Compila el programa:
-   gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+### About `hsh`
+`hsh` is a custom implementation of a simple shell, built in C. It includes:
+- Interactive and non-interactive modes
+- Built-in commands like `exit` and `env`
+- Execution of external programs
+- PATH resolution for finding executables
+- Environment variable access
+- Error handling and status management
 
-## Usage
+---
 
-- **Modo interactivo**:
-  ./hsh
-  El shell mostrará un prompt y esperará comandos del usuario.
+## 🧠 Key Concepts
 
-- **Modo no interactivo**:
-  echo "ls -l" | ./hsh
-  El shell ejecutará los comandos proporcionados y luego saldrá.
+### PID and PPID
+- **PID (Process ID):** ID assigned to each running process.
+- **PPID (Parent Process ID):** The PID of the process that created the current one.
 
-## Features
+### Process Control
+- **`fork()`** - creates child processes.
+- **`execve()`** - replaces the current process image with a new program.
+- **`wait()`/`waitpid()`** - makes the parent wait for child process termination.
 
-- Ejecución de comandos externos encontrados en `PATH`.
-- Soporte para comandos internos: `exit`, `env`.
-- Manejo de modo interactivo y no interactivo.
-- Manejo de errores similar a `/bin/sh`.
+### Environment Variables
+- Accessed via `environ`.
+- Environment manipulation allows command lookup via `PATH`.
 
-## Built-in Commands
+### PATH Resolution
+The shell parses the `PATH` environment variable to find executable files if the command is not provided with an absolute or relative path.
 
-- `exit`: Termina el shell.
-- `env`: Muestra las variables de entorno actuales.
+### Compilation
 
-## Authors
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
-- Fernando Lockwood  
-- Andrés Mora
+### Main Signatures Supported
+- `int main(void)`
+- `int main(int argc, char *argv[])`
+- `int main(int argc, char *argv[], char *envp[])`
+
+---
+
+## 📌 Built-in Commands
+
+| Command  | Description                       |
+|----------|-----------------------------------|
+| `exit`   | Exits the shell with a status code |
+| `env`    | Prints the current environment    |
+
+*Built-ins are handled internally without creating a child process.*
+
+---
+
+## 📂 External Commands
+
+If a command is not a built-in, `hsh`:
+- Searches directories listed in `PATH`
+- Executes the program via `execve()`
+
+Examples:
+- `ls`
+- `pwd`
+- `cat`
+- `mkdir`
+
+---
+
+## ⚙️ System Calls & Functions
+
+| Purpose              | System Calls / Functions             |
+|----------------------|---------------------------------------|
+| Process management   | `fork()`, `execve()`, `wait()`, `waitpid()` |
+| Input reading        | `getline()`, `read()`                 |
+| File handling        | `open()`, `close()`, `stat()`, `lstat()`, `fstat()` |
+| Directory handling   | `chdir()`, `getcwd()`, `opendir()`, `readdir()`, `closedir()` |
+| Memory management    | `malloc()`, `free()`                  |
+| Environment access   | `environ`, `getenv()`                 |
+| Output               | `write()`, `perror()`, `fflush()`     |
+
+---
+
+## ✅ Allowed Functions
+
+**String and Memory:**
+- `strtok`, `strlen`, `strcmp`, `strcpy`, `strchr`, `strstr`
+- `memcpy`, `memmove`, `memset`, `memcmp`
+- `malloc`, `free`
+
+**Process and Execution:**
+- `fork`, `execve`, `wait`, `waitpid`, `wait3`, `wait4`
+- `_exit`, `exit`
+
+**File and Directory Operations:**
+- `open`, `close`, `read`, `write`, `stat`, `lstat`, `fstat`
+- `chdir`, `getcwd`, `opendir`, `readdir`, `closedir`
+
+**Environment and Output:**
+- `environ`, `getenv`
+- `perror`, `printf`, `fprintf`, `vfprintf`, `putchar`, `fflush`
+- `isatty`, `kill`
+
+---
+
+## 💻 Usage
+
+### Interactive Mode
+$ ./hsh
+$ ls -l
+$ pwd
+$ exit
+
+
+### Non-Interactive Mode
+$ echo "ls -l /tmp" | ./hsh
+
+Or
+
+$ cat commands.txt | ./hsh
+(where `commands.txt` contains a list of commands)
+
+---
+
+## ❗ Error Handling
+
+- Command Not Found:
+  fprintf(stderr, "./hsh: 1: %s: not found\n", command);
+  Exits with status 127.
+
+- Failed System Calls:
+  perror("Error");
+
+- Fork Failures:
+  Reported using perror() and handled gracefully.
+
+---
+
+## 👥 Authors
+
+- Fernando Lockwood - flockwood@live.com
+- Andres Mora - andresfmora.catro@gmail.com
+
 
